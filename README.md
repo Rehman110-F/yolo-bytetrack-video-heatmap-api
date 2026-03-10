@@ -271,7 +271,7 @@ Download the processed video once ready.
 
 # Author
 
-**Abdulrehman**
+**Muhammad Rehman Ashraf**
 
 Computer Vision Developer specializing in:
 
@@ -284,7 +284,7 @@ Computer Vision Developer specializing in:
 
 # License
 
-MIT License
+PIEAS License
 
 ---
 
