@@ -1,103 +1,108 @@
-YOLO ByteTrack Video Heatmap API
+# YOLO ByteTrack Video Heatmap API
 
-A FastAPI-based AI video processing API that detects people in a video using YOLOv11 + ByteTrack tracking and generates a dynamic movement heatmap overlay on the video.
+A **FastAPI-based AI video processing API** that detects people in a video using **YOLOv11 + ByteTrack tracking** and generates a **dynamic movement heatmap overlay** on the video.
 
-This project is designed to run easily in Google Colab and be exposed publicly using ngrok for testing.
+This project is designed to run easily in **Google Colab** and be exposed publicly using **ngrok** for testing.
 
-Perfect for:
+## Use Cases
 
-Crowd analysis
+- Crowd analysis
+- Store analytics
+- Smart surveillance
+- Movement pattern analysis
 
-Store analytics
+---
 
-Smart surveillance
+# Features
 
-Movement pattern analysis
+- Person detection using **YOLO**
+- Multi-object tracking using **ByteTrack**
+- Dynamic **movement heatmap generation**
+- Video processing API with **FastAPI**
+- Background video processing
+- Download processed video
+- Public API access using **ngrok**
+- Interactive API testing using **Swagger UI**
 
-Features
+---
 
-Person detection using YOLO
+# Technology Stack
 
-Multi-object tracking using ByteTrack
+- Python
+- FastAPI
+- YOLO (Ultralytics)
+- ByteTrack
+- OpenCV
+- PyTorch
+- Google Colab
+- ngrok
 
-Dynamic movement heatmap generation
+---
 
-Video processing API with FastAPI
+# Running the Project in Google Colab
 
-Background processing
+This project is designed to run easily in **Google Colab**.
 
-Download processed video
+---
 
-Public API access using ngrok
+# Step 1 — Open the Notebook
 
-Interactive testing using Swagger UI
-
-Technology Stack
-
-Python
-
-FastAPI
-
-YOLO (Ultralytics)
-
-ByteTrack
-
-OpenCV
-
-PyTorch
-
-Google Colab
-
-ngrok
-
-Running the Project in Google Colab
-
-This project is designed to run easily in Google Colab.
-
-Step 1 — Open the Notebook
-
-Upload the provided notebook to Google Colab.
+Upload the provided notebook to **Google Colab**.
 
 Or create a new notebook and paste the project code.
 
-Step 2 — Install Dependencies
+---
+
+# Step 2 — Install Dependencies
 
 Run the setup cells that install all required libraries.
 
+```bash
 pip install ultralytics
 pip install fastapi uvicorn pyngrok
+```
 
-Also install ByteTrack dependencies.
+Install ByteTrack dependencies as well.
 
-Step 3 — Start the FastAPI Server
+---
 
-Start the API server using uvicorn.
+# Step 3 — Start the FastAPI Server
 
+Start the API server using **uvicorn**.
+
+```bash
 uvicorn app:app --host 0.0.0.0 --port 8000
+```
 
-This will start the API inside Colab.
+This will start the API server inside Colab.
 
-Step 4 — Create an ngrok Account
+---
 
-To expose the API publicly you need ngrok.
+# Step 4 — Create an ngrok Account
 
-Create a free account here:
+To expose the API publicly you need **ngrok**.
+
+Create a free account:
 
 https://ngrok.com
 
 After signup:
 
-Copy your Auth Token
+1. Copy your **Auth Token**
+2. Go to **Google Colab Secrets**
+3. Store the token using the name:
 
-Go to Google Colab Secrets
-
-Store the token with name:
-
+```python
 NGROK_TOKEN
-Step 5 — Connect ngrok
+```
 
-Run the following code in Colab:
+---
 
+# Step 5 — Connect ngrok
+
+Run the following code inside Colab:
+
+```python
 from pyngrok import ngrok
 from google.colab import userdata
 
@@ -105,74 +110,102 @@ token = userdata.get('NGROK_TOKEN')
 ngrok.set_auth_token(token)
 
 public_url = ngrok.connect(8000)
+
 print("Public URL:", public_url)
+```
 
 This will generate a public URL like:
 
+```
 https://abcd-1234.ngrok-free.app
-Step 6 — Open Swagger UI
+```
+
+---
+
+# Step 6 — Open Swagger UI
 
 FastAPI automatically generates API documentation.
 
-Open this URL in your browser:
+Open the following URL in your browser:
 
+```
 https://your-ngrok-url/docs
+```
 
 Example:
 
+```
 https://abcd-1234.ngrok-free.app/docs
+```
 
-This will open the Swagger UI interface where you can test the API.
+This will open the **Swagger UI interface** where you can test the API.
 
-Step 7 — Upload a Video for Processing
+---
 
-Inside Swagger UI:
+# Step 7 — Upload a Video for Processing
+
+Inside **Swagger UI**:
 
 Find the endpoint:
 
+```
 POST /processvideo
+```
 
-Click Try it out
+Click **Try it out**
 
-Upload your video file and press Execute.
+Upload your video file and press **Execute**.
 
-The API will return something like:
+The API will return a response like:
 
+```json
 {
-  "output_file": "outputs/processed_video.mp4",
-  "status": "Processing started in background"
+ "output_file": "outputs/processed_video.mp4",
+ "status": "Processing started in background"
 }
+```
 
 The video will now start processing.
 
-Step 8 — Download the Processed Video
+---
+
+# Step 8 — Download the Processed Video
 
 Once processing finishes you can download the output video.
 
 Use the endpoint:
 
+```
 GET /download/{filename}
+```
 
 Example:
 
+```
 /download/processed_video.mp4
+```
 
 Important note:
 
-Swagger sometimes cannot properly download video responses.
+Swagger sometimes **cannot properly download video responses**.
 
-Therefore it is recommended to open the download endpoint directly in the browser.
+Therefore it is recommended to open the download endpoint **directly in the browser**.
 
 Example:
 
+```
 https://your-ngrok-url/download/processed_video.mp4
+```
 
 This will automatically download the processed video.
 
-How the Heatmap Works
+---
+
+# How the Heatmap Works
 
 Pipeline:
 
+```
 Video
    ↓
 YOLO Person Detection
@@ -188,62 +221,73 @@ Gaussian Blur
 Color Map Overlay
    ↓
 Output Video
+```
 
 The heatmap highlights areas where people spend the most time.
 
-API Endpoints
-Upload Video
+---
+
+# API Endpoints
+
+## Upload Video
+
+```
 POST /processvideo
+```
 
 Upload a video file and start processing.
 
-Download Processed Video
+---
+
+## Download Processed Video
+
+```
 GET /download/{filename}
+```
 
 Download the processed video once ready.
 
-Example Use Cases
+---
 
-Retail store analytics
+# Example Use Cases
 
-Mall foot traffic analysis
+- Retail store analytics
+- Mall foot traffic analysis
+- Smart city monitoring
+- Event crowd analysis
+- Security surveillance
 
-Smart city monitoring
+---
 
-Event crowd analysis
+# Future Improvements
 
-Security surveillance
+- Real-time webcam heatmap
+- Live streaming support
+- Multi-class heatmaps
+- Web dashboard
+- GPU optimization
 
-Future Improvements
+---
 
-Real-time webcam heatmap
+# Author
 
-Live streaming support
-
-Multi-class heatmaps
-
-Web dashboard
-
-GPU optimization
-
-Author
-
-Abdulrehman
+**Abdulrehman**
 
 Computer Vision Developer specializing in:
 
-AI Video Analytics
+- AI Video Analytics
+- 3D Computer Vision
+- Object Tracking
+- AR/VR Systems
 
-3D Computer Vision
+---
 
-Object Tracking
-
-AR/VR Systems
-
-License
+# License
 
 MIT License
 
-If you like this project
+---
+
+# If you like this project
 
 Give it a ⭐ on GitHub.
